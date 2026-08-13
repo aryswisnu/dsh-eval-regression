@@ -13,13 +13,18 @@ Agent changes routinely regress answers that appear superficially acceptable. A 
 - per-case reports make failures reviewable
 - deterministic scoring is suitable for CI thresholds
 
-## Install
+## Install from source
+
+This project is not published to npm yet. Clone it beside your DSH composition, install its dependencies, then reference its local path:
 
 ```sh
-npm install dsh-eval-regression
+git clone https://github.com/aryswisnu/dsh-eval-regression.git
+cd dsh-eval-regression
+npm install
+npm run build
 ```
 
-Add the package to a DeepSeek Harness Cordis composition after `@deepseek-ai/dsh-tools`:
+Add the built local package to a DeepSeek Harness Cordis composition after `@deepseek-ai/dsh-tools`:
 
 ```yaml
 - name: '@deepseek-ai/dsh-tools'
