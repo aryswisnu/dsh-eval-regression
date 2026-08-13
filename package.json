@@ -1,0 +1,23 @@
+{
+  "name": "dsh-eval-regression",
+  "version": "0.1.0",
+  "description": "Replayable golden-output evaluation tools for DeepSeek Harness",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["deepseek-harness", "dsh-plugin", "evaluation", "regression-testing"],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.5"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.5",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
