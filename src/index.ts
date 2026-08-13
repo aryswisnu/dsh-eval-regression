@@ -34,11 +34,17 @@ export function apply(ctx: Context): void {
     output: {
       schema: {
         type: 'object', additionalProperties: false, properties: {
-          suite: { type: 'string' }, passed: { type: 'integer' }, failed: { type: 'integer' }, score: { type: 'number' },
-          cases: { type: 'array', items: { type: 'object', additionalProperties: false, properties: {
-            id: { type: 'string' }, pass: { type: 'boolean' }, missing: { type: 'array', items: { type: 'string' } }, forbidden: { type: 'array', items: { type: 'string' } },
-          }, required: ['id', 'pass', 'missing', 'forbidden'] } },
-        }, required: ['suite', 'passed', 'failed', 'score', 'cases'],
+          suite: { type: 'string', required: true },
+          passed: { type: 'integer', required: true },
+          failed: { type: 'integer', required: true },
+          score: { type: 'number', required: true },
+          cases: { type: 'array', required: true, items: { type: 'object', additionalProperties: false, properties: {
+            id: { type: 'string', required: true },
+            pass: { type: 'boolean', required: true },
+            missing: { type: 'array', items: { type: 'string' }, required: true },
+            forbidden: { type: 'array', items: { type: 'string' }, required: true },
+          } } },
+        },
       },
       render: (_args, report) => [{ type: 'text', text: JSON.stringify(report) }],
     },
