@@ -1,19 +1,58 @@
 {
   "name": "dsh-eval-regression",
   "version": "0.1.0",
-  "description": "Replayable golden-output evaluation tools for DeepSeek Harness",
+  "description": "Deterministic, CI-safe golden-output evaluation for DeepSeek Harness",
   "type": "module",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "dsh-eval-regression": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./runner": {
+      "types": "./dist/runner.d.ts",
+      "default": "./dist/runner.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "deepseek-harness",
     "dsh-plugin",
     "evaluation",
-    "regression-testing"
+    "regression-testing",
+    "ci"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryswisnu/dsh-eval-regression.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aryswisnu/dsh-eval-regression/issues"
+  },
+  "homepage": "https://github.com/aryswisnu/dsh-eval-regression#readme",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "evaluate": "tsx src/cli.ts",
+    "prepare": "npm run build",
+    "pack:check": "npm run build && npm pack --dry-run"
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
@@ -23,6 +62,7 @@
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
     "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }

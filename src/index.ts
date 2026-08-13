@@ -7,6 +7,7 @@ import type { Context } from '@deepseek-ai/cordis'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 
 export * from './evaluate.js'
+export * from './runner.js'
 import { evaluateSuite, type EvaluationSuite } from './evaluate.js'
 
 export const name = 'dsh-eval-regression'

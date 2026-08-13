@@ -13,23 +13,49 @@ Agent changes routinely regress answers that appear superficially acceptable. A 
 - per-case reports make failures reviewable
 - deterministic scoring is suitable for CI thresholds
 
-## Install from source
+## Install as a DSH plugin
 
-This project is not published to npm yet. Clone it beside your DSH composition, install its dependencies, then reference its local path:
+```sh
+dsh plugin --profile <profile> add github:aryswisnu/dsh-eval-regression
+```
+
+The package is a DSH bundle. Its `cordis.patch.yml` registers the tool automatically after the profile's base tool runtime.
+
+For local development:
 
 ```sh
 git clone https://github.com/aryswisnu/dsh-eval-regression.git
 cd dsh-eval-regression
 npm install
 npm run build
+dsh plugin --profile <profile> add .
 ```
 
-Add the built local package to a DeepSeek Harness Cordis composition after `@deepseek-ai/dsh-tools`:
+## Run a version-controlled suite in CI
 
-```yaml
-- name: '@deepseek-ai/dsh-tools'
-- name: 'dsh-eval-regression'
+The plugin also ships a small CLI. It reads a JSON suite, prints an evaluation report to stdout, exits `0` when every case passes, exits `1` when any case fails, and exits `2` for invalid input or usage errors.
+
+```json
+{
+  "suite": "release-smoke",
+  "cases": [
+    {
+      "id": "grounded-answer",
+      "actual": "The result is 42. Source: benchmark.csv",
+      "includes": ["42", "Source:"],
+      "excludes": ["I cannot verify"]
+    }
+  ]
+}
 ```
+
+```sh
+npx dsh-eval-regression suites/release-smoke.json
+# or, from this repository:
+npm run evaluate -- suites/release-smoke.json
+```
+
+The report includes total passed and failed cases, a `0..1` score, and case-level missing or forbidden fragments. This makes the evaluation corpus ordinary, reviewable source code and makes a failed expectation fail the CI job.
 
 ## Tool example
 
